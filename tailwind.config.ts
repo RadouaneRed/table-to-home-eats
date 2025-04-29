@@ -64,28 +64,28 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				brand: {
-					50: "#FFF7ED",
-					100: "#FFEDD5",
-					200: "#FED7AA",
-					300: "#FDBA74",
-					400: "#FB923C",
-					500: "#F97316", // Main brand color - orange
-					600: "#EA580C",
-					700: "#C2410C",
-					800: "#9A3412",
-					900: "#7C2D12"
+					50: "#FFF5F5",
+					100: "#FED7D7",
+					200: "#FEB2B2",
+					300: "#FC8181",
+					400: "#F56565",
+					500: "#E53E3E", // Main brand color - red
+					600: "#C53030",
+					700: "#9B2C2C",
+					800: "#822727",
+					900: "#63171B"
 				},
 				navy: {
-					50: "#F8FAFC",
-					100: "#F1F5F9",
+					50: "#F7FAFC",
+					100: "#EDF2F7",
 					200: "#E2E8F0",
 					300: "#CBD5E1",
-					400: "#94A3B8",
-					500: "#64748B",
-					600: "#475569",
-					700: "#334155",
-					800: "#1E293B", // Dark navy for contrast
-					900: "#0F172A"
+					400: "#A0AEC0",
+					500: "#718096",
+					600: "#4A5568",
+					700: "#2D3748",
+					800: "#1A202C", // Dark black for contrast
+					900: "#171923"
 				}
 			},
 			borderRadius: {

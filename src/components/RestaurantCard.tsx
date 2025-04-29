@@ -23,28 +23,28 @@ const RestaurantCard = ({
 }: RestaurantCardProps) => {
   return (
     <Link to={`/restaurant/${id}`} className="group">
-      <div className="restaurant-card group-hover:translate-y-[-4px] transition-all">
+      <div className="restaurant-card group-hover:translate-y-[-2px] transition-all">
         <div className="relative">
           <img
             src={image}
             alt={name}
             className="restaurant-card-image"
           />
-          <div className="absolute top-3 right-3 bg-white rounded-full px-2 py-1 flex items-center gap-1">
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-            <span className="text-sm font-medium">{rating}</span>
+          <div className="absolute top-2 right-2 bg-white rounded-full px-1.5 py-0.5 flex items-center gap-0.5">
+            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+            <span className="text-xs font-medium">{rating}</span>
           </div>
         </div>
-        <div className="p-4">
-          <h3 className="font-semibold text-lg">{name}</h3>
-          <p className="text-gray-600 text-sm mb-2">{cuisine}</p>
-          <div className="flex items-center justify-between text-sm text-gray-500">
+        <div className="p-2">
+          <h3 className="font-medium text-sm line-clamp-1">{name}</h3>
+          <p className="text-gray-600 text-xs mb-1 line-clamp-1">{cuisine}</p>
+          <div className="flex items-center justify-between text-xs text-gray-500">
             <div className="flex items-center">
-              <Clock className="h-4 w-4 mr-1" />
+              <Clock className="h-3 w-3 mr-0.5" />
               <span>{deliveryTime}</span>
             </div>
             <div className="flex items-center">
-              <MapPin className="h-4 w-4 mr-1" />
+              <MapPin className="h-3 w-3 mr-0.5" />
               <span>{distance}</span>
             </div>
           </div>
