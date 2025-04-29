@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ShoppingCart, Menu, X, Home, Restaurant } from "lucide-react";
+import { ShoppingCart, Menu, X, Home, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -52,11 +52,11 @@ const Navbar = () => {
                   Home
                 </Link>
                 <Link to="/restaurants" className="text-lg font-medium flex items-center gap-2">
-                  <Restaurant className="h-5 w-5" />
+                  <Store className="h-5 w-5" />
                   Restaurants
                 </Link>
                 <Link to="/about" className="text-lg font-medium flex items-center gap-2">
-                  <Restaurant className="h-5 w-5" />
+                  <Store className="h-5 w-5" />
                   About
                 </Link>
               </div>

@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Delivery, Store } from "lucide-react";
+import { Truck, Store } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface OrderTypeSelectorProps {
@@ -26,7 +26,7 @@ const OrderTypeSelector = ({ onChange }: OrderTypeSelectorProps) => {
         )}
         onClick={() => handleSelect("delivery")}
       >
-        <Delivery className="h-5 w-5" />
+        <Truck className="h-5 w-5" />
         <span className="font-medium">Delivery</span>
       </button>
       <button
