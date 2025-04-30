@@ -8,19 +8,17 @@ interface QrCodeDisplayProps {
 
 const QrCodeDisplay = ({ tableNumber, qrValue }: QrCodeDisplayProps) => {
   return (
-    <div className="qr-section">
-      <div className="flex flex-col items-center justify-center">
-        <QrCode className="h-16 w-16 mb-2" />
-        <div className="text-center">
-          <p className="text-sm font-medium">Scan to order at table</p>
-          <p className="text-xs text-gray-300">Table #{tableNumber}</p>
+    <div className="bg-navy-800 rounded-lg overflow-hidden">
+      <div className="flex items-center p-3">
+        <div className="bg-white/10 rounded-lg p-3 mr-3">
+          <QrCode className="h-10 w-10 text-white" />
         </div>
-      </div>
-      <div className="flex-1">
-        <h3 className="text-lg font-semibold mb-1">Skip the wait!</h3>
-        <p className="text-sm text-gray-300">
-          Scan this QR code to order directly to your table. No need to wait for a server.
-        </p>
+        <div className="flex-1">
+          <h3 className="text-base font-semibold text-white mb-1">Scan to order at table #{tableNumber}</h3>
+          <p className="text-xs text-gray-300">
+            Scan the QR code on your table for quick ordering
+          </p>
+        </div>
       </div>
     </div>
   );

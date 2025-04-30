@@ -1,10 +1,11 @@
-
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import RestaurantCard from "@/components/RestaurantCard";
 import FoodCard from "@/components/FoodCard";
 import QrCodeDisplay from "@/components/QrCodeDisplay";
+import CategoryFilter from "@/components/CategoryFilter";
+import PopularBrands from "@/components/PopularBrands";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 
@@ -191,127 +192,120 @@ const featuredDishes = [
 ];
 
 const Index = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  
   const handleAddToCart = (itemName: string) => {
     toast.success(`Added ${itemName} to cart`);
   };
 
+  // Filter items based on selected category
+  const filteredDishes = selectedCategory ? 
+    featuredDishes.filter(dish => {
+      switch(selectedCategory) {
+        case 'pizza': return dish.name.toLowerCase().includes('pizza');
+        case 'burgers': return dish.name.toLowerCase().includes('burger');
+        case 'sandwiches': return dish.name.toLowerCase().includes('sandwich');
+        case 'chicken': return dish.name.toLowerCase().includes('chicken');
+        case 'topRated': return true; // In a real app, we would filter by rating
+        default: return true;
+      }
+    }) : 
+    featuredDishes;
+
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 pb-20">
       <Navbar />
       <Hero />
       
-      <div className="container mx-auto px-3 py-8">
-        <div className="mb-6">
+      <div className="container mx-auto px-0 py-4">
+        <div className="mb-4 px-3">
           <QrCodeDisplay tableNumber="23" qrValue="table-23" />
         </div>
         
-        <h2 className="text-2xl font-display font-bold mb-4">Popular Nearby</h2>
+        <div className="sticky top-0 z-10 bg-gray-50 pb-2 pt-2">
+          <CategoryFilter 
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+          />
+        </div>
         
-        <Tabs defaultValue="restaurants" className="mb-8">
-          <TabsList className="mb-4 bg-gray-200">
-            <TabsTrigger 
-              value="restaurants"
-              className="data-[state=active]:bg-brand-500 data-[state=active]:text-white"
-            >
-              Restaurants
-            </TabsTrigger>
-            <TabsTrigger 
-              value="featured"
-              className="data-[state=active]:bg-brand-500 data-[state=active]:text-white"
-            >
-              Featured Dishes
-            </TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="restaurants" className="animate-enter">
-            <div className="compact-grid">
-              {restaurants.map((restaurant) => (
-                <RestaurantCard key={restaurant.id} {...restaurant} />
-              ))}
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="featured" className="animate-enter">
-            <div className="compact-grid">
-              {featuredDishes.map((dish) => (
-                <FoodCard 
-                  key={dish.id}
-                  {...dish}
-                  onAddToCart={() => handleAddToCart(dish.name)}
-                />
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
+        <PopularBrands />
         
-        <div className="bg-navy-800 rounded-md p-4 mb-8 text-white">
+        <div className="px-3">
+          <h2 className="text-2xl font-bold mb-4">Popular Nearby</h2>
+          
+          <Tabs defaultValue="restaurants" className="mb-8">
+            <TabsList className="mb-4 bg-gray-200 w-full">
+              <TabsTrigger 
+                value="restaurants"
+                className="flex-1 data-[state=active]:bg-brand-500 data-[state=active]:text-white"
+              >
+                Restaurants
+              </TabsTrigger>
+              <TabsTrigger 
+                value="featured"
+                className="flex-1 data-[state=active]:bg-brand-500 data-[state=active]:text-white"
+              >
+                Featured Dishes
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="restaurants" className="animate-enter">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
+                {restaurants.map((restaurant) => (
+                  <RestaurantCard key={restaurant.id} {...restaurant} />
+                ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="featured" className="animate-enter">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
+                {filteredDishes.map((dish) => (
+                  <FoodCard 
+                    key={dish.id}
+                    {...dish}
+                    onAddToCart={() => handleAddToCart(dish.name)}
+                  />
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+        
+        <div className="bg-navy-800 mx-3 rounded-lg p-4 mb-8 text-white">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="md:w-1/2">
-              <h2 className="text-2xl font-display font-bold mb-3">Order to Your Table</h2>
-              <p className="text-gray-300 mb-4 text-sm">
+              <h2 className="text-xl font-bold mb-3">Order to Your Table</h2>
+              <p className="text-gray-300 mb-4 text-xs">
                 Skip the wait and order directly to your table. Simply scan the QR code at your table
                 and enjoy a seamless dining experience.
               </p>
-              <button className="bg-brand-500 hover:bg-brand-600 text-white font-medium py-2 px-4 rounded-md transition-colors text-sm">Learn More</button>
+              <button className="bg-brand-500 hover:bg-brand-600 text-white font-medium py-1.5 px-3 rounded-md transition-colors text-xs">Learn More</button>
             </div>
             <div className="md:w-1/2">
               <img 
                 src="https://images.unsplash.com/photo-1721322800607-8c38375eef04" 
                 alt="Table service" 
-                className="rounded-md shadow-md w-full h-48 object-cover"
+                className="rounded-md shadow-md w-full h-32 object-cover"
               />
             </div>
           </div>
         </div>
-        
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-display font-bold mb-3">How It Works</h2>
-          <p className="text-gray-700 max-w-2xl mx-auto text-sm">
-            Table2Home makes it easy to order food for delivery or directly to your table
-            at participating restaurants.
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="text-center p-4 bg-white rounded-md shadow-sm">
-            <div className="w-12 h-12 bg-brand-100 text-brand-500 rounded-full flex items-center justify-center mx-auto mb-3">
-              <span className="text-lg font-bold">1</span>
-            </div>
-            <h3 className="font-semibold text-lg mb-1">Choose Restaurant</h3>
-            <p className="text-gray-600 text-sm">Browse restaurants and menus to find what you're craving</p>
-          </div>
-          
-          <div className="text-center p-4 bg-white rounded-md shadow-sm">
-            <div className="w-12 h-12 bg-brand-100 text-brand-500 rounded-full flex items-center justify-center mx-auto mb-3">
-              <span className="text-lg font-bold">2</span>
-            </div>
-            <h3 className="font-semibold text-lg mb-1">Select Delivery Type</h3>
-            <p className="text-gray-600 text-sm">Choose between home delivery or ordering to your table</p>
-          </div>
-          
-          <div className="text-center p-4 bg-white rounded-md shadow-sm">
-            <div className="w-12 h-12 bg-brand-100 text-brand-500 rounded-full flex items-center justify-center mx-auto mb-3">
-              <span className="text-lg font-bold">3</span>
-            </div>
-            <h3 className="font-semibold text-lg mb-1">Enjoy Your Meal</h3>
-            <p className="text-gray-600 text-sm">Sit back and relax as your food arrives quickly</p>
-          </div>
-        </div>
       </div>
       
-      <footer className="bg-navy-800 text-white py-8">
+      <footer className="bg-navy-800 text-white py-6">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div>
-              <h3 className="text-lg font-display font-bold mb-3">Table2Home</h3>
-              <p className="text-gray-300 text-sm">
+              <h3 className="text-base font-bold mb-2">Table2Home</h3>
+              <p className="text-gray-300 text-xs">
                 Connecting restaurants with customers for the perfect dining experience.
               </p>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-2 text-sm">Quick Links</h4>
-              <ul className="space-y-1 text-xs">
+              <h4 className="font-semibold mb-2 text-xs">Quick Links</h4>
+              <ul className="space-y-1 text-[10px]">
                 <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Home</a></li>
                 <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Restaurants</a></li>
                 <li><a href="#" className="text-gray-300 hover:text-white transition-colors">About Us</a></li>
@@ -319,23 +313,23 @@ const Index = () => {
             </div>
             
             <div>
-              <h4 className="font-semibold mb-2 text-sm">Legal</h4>
-              <ul className="space-y-1 text-xs">
+              <h4 className="font-semibold mb-2 text-xs">Legal</h4>
+              <ul className="space-y-1 text-[10px]">
                 <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
                 <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-2 text-sm">Contact</h4>
-              <ul className="space-y-1 text-xs">
+              <h4 className="font-semibold mb-2 text-xs">Contact</h4>
+              <ul className="space-y-1 text-[10px]">
                 <li className="text-gray-300">support@table2home.com</li>
                 <li className="text-gray-300">+1 (555) 123-4567</li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t border-gray-700 mt-6 pt-4 text-center text-gray-400 text-xs">
+          <div className="border-t border-gray-700 mt-4 pt-4 text-center text-gray-400 text-[10px]">
             <p>&copy; {new Date().getFullYear()} Table2Home. All rights reserved.</p>
           </div>
         </div>
