@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import QRCodeSection from "@/components/QRCodeSection";
 import FilterSection from "@/components/FilterSection";
-import PopularBrands from "@/components/PopularBrands";
+import RestaurantsList from "@/components/RestaurantsList";
 import FeaturedSection from "@/components/sections/FeaturedSection";
 import TableOrderPromotion from "@/components/sections/TableOrderPromotion";
 import Footer from "@/components/Footer";
@@ -24,7 +24,7 @@ const Index = () => {
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
         />
-        <PopularBrands />
+        <RestaurantsList />
         <FeaturedSection 
           restaurants={restaurants}
           featuredDishes={featuredDishes}
